@@ -4,15 +4,17 @@ import requests
 import datetime
 
 # -------------------- BASIC SETUP --------------------
+import streamlit as st
+
 st.set_page_config(
-    page_title="Z&J ka Chatbot",
+    page_title="Vinesh ka Chatbot 🤖",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-PDF_PATH = "data/Zeeshan_Chatbot_Company_Manual.pdf"
+PDF_PATH = "data/Vinesh_Chatbot_Company_Manual.pdf"
 MODEL_NAME = "llama-3.1-8b-instant"
 
 
