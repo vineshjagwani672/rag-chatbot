@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-PDF_PATH = "data/Vinesh_Chatbot_Company_Manual.pdf"
+PDF_PATH = "data/vinesh_manual.pdf"
 MODEL_NAME = "llama-3.1-8b-instant"
 
 
