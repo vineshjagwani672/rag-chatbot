@@ -241,7 +241,7 @@ def get_answer(question: str, history):
 
     if pdf_strength < 50:
         system_prompt = f"""
-You are V&K ka Chatbot.
+You are Pawan Vinesh Electronics ka official chatbot. Only answer based on the PDF context provided. Do not use general knowledge for company-specific information.
 
 Rules:
 - Give clear and direct answers.
@@ -252,7 +252,7 @@ Rules:
 """
     else:
         system_prompt = f"""
-You are V&K ka Chatbot.
+You are Pawan Vinesh Electronics ka official chatbot. Only answer based on the PDF context provided. Do not use general knowledge for company-specific information.
 
 Use the following PDF text as your main reference.
 If updated information (today = {today}) is needed, include it naturally.
