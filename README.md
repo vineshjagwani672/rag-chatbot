@@ -15,7 +15,15 @@ A Streamlit-based PDF chatbot for Pawan Vinesh Electronics. The app reads `data/
 
 ```text
 .
-├── app.py
+├── app.py                  # Streamlit launcher
+├── frontend/               # UI, sidebar, chat layout, CSS
+│   ├── app.py
+│   └── styles.py
+├── backend/                # PDF loading, retrieval, prompts, Groq API
+│   ├── config.py
+│   ├── pdf_service.py
+│   ├── rag_service.py
+│   └── groq_client.py
 ├── requirements.txt
 ├── data/
 │   └── vinesh_manual.pdf
@@ -84,7 +92,7 @@ The app automatically refreshes cached PDF chunks when the PDF file size or modi
 1. Push changes to GitHub.
 2. Connect the GitHub repo in Streamlit Cloud.
 3. Add `GROQ_API_KEY` in Streamlit Cloud app secrets.
-4. Deploy the app from `app.py`.
+4. Deploy the app from root `app.py`.
 
 When the connected GitHub branch is pushed, Streamlit Cloud should automatically redeploy the app.
 
