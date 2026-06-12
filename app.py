@@ -2,10 +2,10 @@ import streamlit as st
 import pdfplumber
 import requests
 import datetime
+import os
+import re
 
 # -------------------- BASIC SETUP --------------------
-import streamlit as st
-
 st.set_page_config(
     page_title="Vinesh ka Chatbot 🤖",
     page_icon="🤖",
@@ -163,10 +163,20 @@ p, li, div {
 
 
 # -------------------- LOAD + CHUNK PDF --------------------
+def get_pdf_info():
+    stat = os.stat(PDF_PATH)
+    return {
+        "path": PDF_PATH,
+        "size": stat.st_size,
+        "mtime_ns": stat.st_mtime_ns,
+        "updated_at": datetime.datetime.fromtimestamp(stat.st_mtime).strftime("%d %b %Y, %I:%M %p"),
+    }
+
+
 @st.cache_data
-def load_chunks(max_chars: int = 600):
+def load_chunks(pdf_path: str, pdf_mtime_ns: int, pdf_size: int, max_chars: int = 600):
     text = ""
-    with pdfplumber.open(PDF_PATH) as pdf:
+    with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
             tx = page.extract_text()
             if tx:
@@ -189,16 +199,21 @@ def load_chunks(max_chars: int = 600):
     return chunks
 
 
-pdf_chunks = load_chunks()
+pdf_info = get_pdf_info()
+pdf_chunks = load_chunks(PDF_PATH, pdf_info["mtime_ns"], pdf_info["size"])
 
 
 # -------------------- SIMPLE RETRIEVAL --------------------
+def tokenize(text: str):
+    return set(re.findall(r"[a-z0-9]+", text.lower()))
+
+
 def retrieve_context(query: str, top_k: int = 3):
-    q_words = set(query.lower().split())
+    q_words = tokenize(query)
     scored = []
 
     for ch in pdf_chunks:
-        ch_words = set(ch.lower().split())
+        ch_words = tokenize(ch)
         score = len(q_words & ch_words)
         if score > 0:
             scored.append((score, ch))
@@ -245,7 +260,8 @@ You are Pawan Vinesh Electronics ka official chatbot. Only answer based on the P
 
 Rules:
 - Give clear and direct answers.
-- Use your updated general knowledge (today = {today}).
+- Today is {today}.
+- If the answer is not available in the PDF context, say that the PDF does not include this information and ask the user to upload/update the PDF.
 - Do NOT say anything about "searching", "checking", "researching", or "not knowing".
 - Never restrict information to the year 2023.
 - Reply in a friendly, helpful style.
@@ -300,9 +316,19 @@ with st.sidebar:
     st.markdown("""
     <div class="info-card">
         <b>Model:</b> llama-3.1-8b-instant<br>
-        <b>Status:</b> Ready to help 💬
+        <b>Status:</b> Ready to help 💬<br>
+        <b>PDF:</b> vinesh_manual.pdf<br>
+        <b>Updated:</b> {updated_at}<br>
+        <b>Chunks:</b> {chunk_count}
     </div>
-    """, unsafe_allow_html=True)
+    """.format(
+        updated_at=pdf_info["updated_at"],
+        chunk_count=len(pdf_chunks),
+    ), unsafe_allow_html=True)
+
+    if st.button("🔄 Reload PDF"):
+        load_chunks.clear()
+        st.rerun()
 
     if st.button("🗑️ Clear Chat"):
         st.session_state.messages = [
