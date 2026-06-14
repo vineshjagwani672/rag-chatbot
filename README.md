@@ -1,8 +1,37 @@
-# V&K PDF Chatbot
+# 🤖 Pawan Vinesh Electronics – AI PDF Chatbot
 
-A Streamlit-based PDF chatbot for Pawan Vinesh Electronics. The app reads `data/vinesh_manual.pdf`, retrieves relevant PDF context, and answers user questions through the Groq chat completions API.
+> A Streamlit-based RAG chatbot that reads company documents and answers customer queries using Groq AI.
 
-## Features
+---
+
+## 👨‍💻 Student Information
+
+| Field | Details |
+|-------|---------|
+| **Name** | Vinesh Kumar |
+| **Roll No** | 67928 |
+| **Course** | Parallel & Distributed Computing (PDC) |
+| **Project** | RAG-Based AI Chatbot |
+
+---
+
+## 🔗 Live Links
+
+| Platform | Link |
+|----------|------|
+| 🤖 **AI Chatbot** | [Open Chatbot](https://rag-chatbot-6cytxsny2bdohfnohsujuk.streamlit.app/) |
+| 🌐 **Website** | [Open Website](https://vineshjagwani672.github.io/rag-chatbot/) |
+| 📁 **GitHub Repo** | [View Code](https://github.com/vineshjagwani672/rag-chatbot) |
+
+---
+
+## 📌 Project Overview
+
+**Pawan Vinesh Electronics AI Chatbot** answers customer questions about products, prices, repairs, warranty, and payments — directly from the company's official PDF manual using RAG (Retrieval Augmented Generation) technology.
+
+---
+
+## ✅ Features
 
 - PDF-based question answering
 - Groq-powered chat responses
@@ -10,28 +39,48 @@ A Streamlit-based PDF chatbot for Pawan Vinesh Electronics. The app reads `data/
 - PDF cache refresh based on file update time and size
 - Sidebar PDF status with chunk count
 - Manual `Reload PDF` button
+- Answers in English only
 
-## Project Structure
+---
+
+## 📂 Project Structure
 
 ```text
 .
-├── app.py                  # Streamlit launcher
-├── frontend/               # UI, sidebar, chat layout, CSS
-│   ├── app.py
-│   └── styles.py
-├── backend/                # PDF loading, retrieval, prompts, Groq API
-│   ├── config.py
-│   ├── pdf_service.py
-│   ├── rag_service.py
-│   └── groq_client.py
-├── requirements.txt
-├── data/
-│   └── vinesh_manual.pdf
+├── frontend/
+│   └── index.html              ← Marketing landing page
+├── backend/
+│   └── data/
+│       └── vinesh_manual.pdf   ← Company knowledge base
+├── app.py                      ← Main Streamlit application
+├── requirements.txt            ← Python dependencies
 └── .streamlit/
-    └── secrets.toml
+    └── secrets.toml            ← API keys (not pushed to GitHub)
 ```
 
-## Requirements
+---
+
+## ⚙️ How RAG Works (PDC Concept)
+
+```
+User Question
+      ↓
+PDF split into chunks  (distributed data)
+      ↓
+Chunks searched in parallel  (parallel processing)
+      ↓
+Relevant chunks retrieved
+      ↓
+Groq AI generates answer
+      ↓
+Answer displayed to user
+```
+
+> Each PDF chunk acts as a distributed data unit — search across chunks runs in parallel, making this a real-world PDC application.
+
+---
+
+## 🚀 Requirements
 
 - Python 3.11+
 - Groq API key
@@ -42,7 +91,9 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-## Setup
+---
+
+## 🔧 Setup
 
 Create `.streamlit/secrets.toml` and add your Groq API key:
 
@@ -50,54 +101,63 @@ Create `.streamlit/secrets.toml` and add your Groq API key:
 GROQ_API_KEY = "your_groq_api_key_here"
 ```
 
-The secrets file is ignored by Git and should not be pushed to GitHub.
+> The secrets file is ignored by Git and must not be pushed to GitHub.
 
-## Run Locally
+---
 
-From the project folder:
+## ▶️ Run Locally
 
 ```bash
 python -m streamlit run app.py
 ```
 
-If you are using the included virtual environment:
+With virtual environment:
 
 ```bash
 ./venv/bin/python -m streamlit run app.py
 ```
 
-Then open:
+Open in browser:
 
-```text
+```
 http://localhost:8501
 ```
 
-## Update The PDF
+---
 
-Replace this file with the new manual:
+## 📄 Update The PDF
 
-```text
+Replace the file:
+
+```
 data/vinesh_manual.pdf
 ```
 
-After updating the PDF:
-
+After updating:
 1. Restart the app, or
-2. Click `Reload PDF` in the sidebar.
+2. Click `Reload PDF` in the sidebar
 
-The app automatically refreshes cached PDF chunks when the PDF file size or modified time changes.
+The app automatically refreshes cached chunks when PDF file size or modified time changes.
 
-## Deploy On Streamlit Cloud
+---
 
-1. Push changes to GitHub.
-2. Connect the GitHub repo in Streamlit Cloud.
-3. Add `GROQ_API_KEY` in Streamlit Cloud app secrets.
-4. Deploy the app from root `app.py`.
+## ☁️ Deploy On Streamlit Cloud
 
-When the connected GitHub branch is pushed, Streamlit Cloud should automatically redeploy the app.
+1. Push changes to GitHub
+2. Connect GitHub repo in Streamlit Cloud
+3. Add `GROQ_API_KEY` in Streamlit Cloud secrets
+4. Deploy from `app.py`
 
-## Notes
+Streamlit Cloud auto-redeploys on every GitHub push.
 
-- The chatbot is designed to answer company-specific questions from the PDF.
-- If the PDF does not include the requested information, the chatbot should ask the user to update or upload the correct PDF.
-- Do not commit `.streamlit/secrets.toml`, `venv/`, or `__pycache__/`.
+---
+
+## 📝 Notes
+
+- Chatbot answers only from the PDF — company-specific information only
+- If information is missing from PDF, chatbot asks user to update the PDF
+- Do not commit `.streamlit/secrets.toml`, `venv/`, or `__pycache__/`
+
+---
+
+*Built with ❤️ by Vinesh Kumar | Roll No: 67928*

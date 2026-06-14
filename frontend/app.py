@@ -6,12 +6,12 @@ from backend.rag_service import get_answer
 from frontend.styles import APP_STYLES
 
 
-WELCOME_MESSAGE = "Assalam o Alaikum! 👋 Main V&K ka Chatbot hoon. Jo bhi poochna hai bindaas poochho, main hoon na aapki madad ke liye."
+WELCOME_MESSAGE = "Welcome! 👋 I am the Pawan Vinesh Electronics AI Assistant. Ask me anything about our products, prices, repairs, or warranty!"
 
 
 def setup_page():
     st.set_page_config(
-        page_title="Vinesh ka Chatbot 🤖",
+        page_title="Pawan Vinesh Electronics AI Assistant 🤖",
         page_icon="🤖",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -21,7 +21,7 @@ def setup_page():
 
 def render_sidebar(pdf_info, pdf_chunks):
     with st.sidebar:
-        st.markdown("## ⚡ V&K Assistant")
+        st.markdown("## ⚡ Pawan Vinesh Electronics AI Assistant")
         st.markdown("""
         <div class="info-card">
             <b>Premium AI Chat Experience</b><br><br>
@@ -63,9 +63,9 @@ def render_sidebar(pdf_info, pdf_chunks):
 def render_header():
     st.markdown("""
     <div class="hero-card">
-        <div class="hero-title">🤖 V&K ka Chatbot</div>
+        <div class="hero-title">🤖 Pawan Vinesh Electronics AI Assistant</div>
         <div class="hero-subtitle">
-            Assalam o Alaikum! Ek modern, stylish aur intelligent chatbot experience —
+            A modern, stylish, and intelligent chatbot experience for product, price, repair, and warranty questions.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -86,7 +86,7 @@ def render_messages():
 
 
 def handle_user_input(pdf_chunks):
-    user_input = st.chat_input("Apna sawal likho...")
+    user_input = st.chat_input("Type your question...")
 
     if not user_input:
         return
@@ -97,7 +97,7 @@ def handle_user_input(pdf_chunks):
         st.markdown(user_input)
 
     with st.chat_message("assistant", avatar="🤖"):
-        with st.spinner("Soch raha hoon..."):
+        with st.spinner("Thinking..."):
             answer = get_answer(
                 question=user_input,
                 history=st.session_state.messages,
